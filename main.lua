@@ -8,6 +8,10 @@
 
 require 'src/Dependencies'
 
+
+-- debug
+love._openConsole()  
+
 function love.load()
     math.randomseed(os.time())
     love.window.setTitle('Legend of Zelda')
