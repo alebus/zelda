@@ -24,6 +24,22 @@ GAME_OBJECT_DEFS = {
             }
         }
     },
+    ['heart'] = {
+        
+        type = 'heart',
+        texture = 'hearts',
+        frame = 5,
+        width = 16,
+        height = 16,
+        solid = false,
+        defaultState = 'default',  -- this stuff is needed for the graphics part to work
+        states = {
+            ['default'] = {
+                frame = 5
+            },
+        }
+
+    },
     ['pot'] = {
         -- TODO
     }

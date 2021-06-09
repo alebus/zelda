@@ -66,6 +66,10 @@ function PlayerSwingSwordState:update(dt)
         if entity:collides(self.swordHitbox) then
             entity:damage(1)
             gSounds['hit-enemy']:play()
+
+            -- todo next add random chance for a heart to drop etc etc
+            local heart = GameObject(GAME_OBJECT_DEFS['heart'], entity.x, entity.y )
+            table.insert(self.dungeon.currentRoom.objects, heart)
         end
     end
 
