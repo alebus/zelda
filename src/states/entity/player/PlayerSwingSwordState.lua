@@ -67,8 +67,24 @@ function PlayerSwingSwordState:update(dt)
             entity:damage(1)
             gSounds['hit-enemy']:play()
 
-            -- todo next add random chance for a heart to drop etc etc
+            -- todo next add random chance for a heart to drop 
+            -- and see below "next 2"
+            
             local heart = GameObject(GAME_OBJECT_DEFS['heart'], entity.x, entity.y )
+
+            heart.onCollide = function()
+               
+                
+                -- todo include an index here to prevent problems
+                -- or instead, set a flag to stop rendering the object
+                table.remove(self.dungeon.currentRoom.objects)
+                gSounds['heart']:play()
+
+                -- todo next 2 add health to the player - see notes
+
+            end
+
+
             table.insert(self.dungeon.currentRoom.objects, heart)
         end
     end
