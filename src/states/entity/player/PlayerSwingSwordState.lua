@@ -62,30 +62,38 @@ end
 function PlayerSwingSwordState:update(dt)
     
     -- check if hitbox collides with any entities in the scene
+    
     for k, entity in pairs(self.dungeon.currentRoom.entities) do
-        if entity:collides(self.swordHitbox) then
+
+        -- print("loop: ", k)
+
+        -- seems like a bug in the original code that would cause many collisions below - adding the entity health > 0 fixed it
+        if entity:collides(self.swordHitbox) and entity.health > 0 then
+            print("entity damage")
             entity:damage(1)
             gSounds['hit-enemy']:play()
 
-            -- todo next add random chance for a heart to drop 
-            -- and see below "next 2"
-            
-            local heart = GameObject(GAME_OBJECT_DEFS['heart'], entity.x, entity.y )
+            if math.random(5) == 3 then 
+                local heart = GameObject(GAME_OBJECT_DEFS['heart'], entity.x, entity.y )
 
-            heart.onCollide = function()
-               
+                heart.onCollide = function()
                 
-                -- todo include an index here to prevent problems
-                -- or instead, set a flag to stop rendering the object
-                table.remove(self.dungeon.currentRoom.objects)
-                gSounds['heart']:play()
+                    print("heart collide")
+                    gSounds['heart']:play()
 
-                -- todo next 2 add health to the player - see notes
 
+                    print("adding 2 to player health")
+                    self.player.health = self.player.health + 2
+                    if self.player.health > 6 then
+                        print("setting player health to 6 because it was going over")
+                        self.player.health = 6
+                    end
+                end
+           
+                table.insert(self.dungeon.currentRoom.objects, heart)
             end
-
-
-            table.insert(self.dungeon.currentRoom.objects, heart)
+            
+           
         end
     end
 

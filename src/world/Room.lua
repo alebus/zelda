@@ -181,7 +181,11 @@ function Room:update(dt)
 
         -- trigger collision callback on object
         if self.player:collides(object) then
+            print("Room: collision with object")
             object:onCollide()
+            if object.consumable then
+                table.remove(self.objects, k)
+            end
         end
     end
 end
