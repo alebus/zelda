@@ -38,11 +38,27 @@ GAME_OBJECT_DEFS = {
         states = {
             ['default'] = {
                 frame = 5
-            },
+            }
         }
 
     },
     ['pot'] = {
-        -- TODO
+        -- todo
+        
+        type = 'pot',
+        texture = 'tiles',
+        frame = 33,
+        width = 16,
+        height = 16,
+        solid = true,
+        consumable = false,
+        defaultState = 'default',  
+        states = { -- todo 
+            ['default'] = {
+                frame = 33
+            }
+        }
+
+
     }
 }
