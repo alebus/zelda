@@ -43,7 +43,7 @@ GAME_OBJECT_DEFS = {
 
     },
     ['pot'] = {
-        -- todo
+        -- todo next - add states etc etc as needed 
         
         type = 'pot',
         texture = 'tiles',
@@ -55,6 +55,9 @@ GAME_OBJECT_DEFS = {
         defaultState = 'default',  
         states = { -- todo 
             ['default'] = {
+                frame = 33
+            },
+            ['flying'] = {
                 frame = 33
             }
         }

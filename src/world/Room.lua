@@ -33,6 +33,9 @@ function Room:init(player)
     -- reference to player for collisions, etc.
     self.player = player
 
+    -- if a player has collided with a solid object i.e. a pot
+    self.player.solidObject = false
+
     -- used for centering the dungeon rendering
     self.renderOffsetX = MAP_RENDER_OFFSET_X
     self.renderOffsetY = MAP_RENDER_OFFSET_Y
@@ -110,9 +113,12 @@ function Room:generateObjects()
                     VIRTUAL_HEIGHT - (VIRTUAL_HEIGHT - MAP_HEIGHT * TILE_SIZE) + MAP_RENDER_OFFSET_Y - TILE_SIZE - 16)
     )
 
+    -- todo next
+     
     pot.onCollide = function()
-    -- todo 
-
+    
+        
+    
     end
 
 
@@ -197,11 +203,26 @@ function Room:update(dt)
 
         -- trigger collision callback on object
         if self.player:collides(object) then
+            
             print("Room: collision with object")
+                     
+           -- todo next - could use onCollide instead of solidObject thing
             object:onCollide()
+
+           
+
+            if object.solid then
+                self.player.solidObject = true
+                --debug
+                --print("Room.lua - self.player.solidObject:", self.player.solidObject)
+            end
+          
+
             if object.consumable then
                 table.remove(self.objects, k)
             end
+            
+           
         end
     end
 end

@@ -26,7 +26,8 @@ function EntityWalkState:update(dt)
     
     -- assume we didn't hit a wall
     self.bumped = false
-
+   
+        
     -- boundary checking on all sides, allowing us to avoid collision detection on tiles
     if self.entity.direction == 'left' then
         self.entity.x = self.entity.x - self.entity.walkSpeed * dt
