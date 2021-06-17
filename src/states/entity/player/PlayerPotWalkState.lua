@@ -40,9 +40,8 @@ function PlayerPotWalkState:update(dt)
             self.entity:changeAnimation('pot-walk-down')
         else
     
-            -- for now I am setting property on the player
+            -- I am setting property on the player vs having a totally different pot-idle state
             -- so that when he does walk again, it goes to pot-walk state
-            -- todo optional - later can make a pot-idle state or something else to have that graphic when player is idle
             self.entity:changeState('idle')
         end
         

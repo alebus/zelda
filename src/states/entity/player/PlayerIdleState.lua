@@ -38,7 +38,7 @@ function PlayerIdleState:update(dt)
         end
     end
 
-    -- todo put this in init if needed etc, see similar examples 
+    
     if self.entity.potCarry then
         self.entity:changeAnimation('pot-idle-' .. self.entity.direction)
     end
