@@ -36,14 +36,20 @@ function PlayerIdleState:update(dt)
         else
             self.entity:changeState('walk')
         end
-        
-        
     end
+
+    -- todo put this in init if needed etc, see similar examples 
+    if self.entity.potCarry then
+        self.entity:changeAnimation('pot-idle-' .. self.entity.direction)
+    end
+    
+
 
     if love.keyboard.wasPressed('space') and self.entity.potCarry == false then
         self.entity:changeState('swing-sword')
     end
 
+    -- todo next need to add states to thow pot etc using player.potCarry attribute
     if love.keyboard.wasPressed('return') then
         print("return was pressed")            
         self.entity:changeState('pot-lift')

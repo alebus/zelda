@@ -116,6 +116,30 @@ ENTITY_DEFS = {
                 interval = 0.05,
                 looping = false,
                 texture = 'character-pot-walk'
+            },
+            ['pot-idle-left'] = {
+                frames = {13},
+                interval = 0.05,
+                looping = false,
+                texture = 'character-pot-walk'
+            },
+            ['pot-idle-right'] = {
+                frames = {5},
+                interval = 0.05,
+                looping = false,
+                texture = 'character-pot-walk'
+            },
+            ['pot-idle-up'] = {
+                frames = {9},
+                interval = 0.05,
+                looping = false,
+                texture = 'character-pot-walk'
+            },
+            ['pot-idle-down'] = {
+                frames = {1},
+                interval = 0.05,
+                looping = false,
+                texture = 'character-pot-walk'
             }
         }
     },
