@@ -1,12 +1,13 @@
 
--- todo next - is this OK?
+-- todo next - check all of these class inheritance things if needed
 PlayerPotLiftState = Class{__includes = BaseState}
 
 
 
-    -- todo next - pick up pot - is this the best place to put this?
-    -- **esp look at the sword swing collision state  
-    -- check if a pot is in front of the player etc etc
+    
+    
+-- check if a pot is in front of the player 
+-- lift it up only if in a special hitbox
 
 
 function PlayerPotLiftState:init(player, dungeon)
@@ -57,14 +58,10 @@ end
 
 function PlayerPotLiftState:enter()
 
-    print("PlayerPotLiftState:enter()")
-
-
+  
 end
 
 
-
---todo next - keep going through playerSwing Sword State and pulling stuff from there 
 
 function PlayerPotLiftState:update(dt)
 
@@ -76,29 +73,30 @@ function PlayerPotLiftState:update(dt)
             
             if object:collides(self.potHitbox) then
             print("object collide")
-                       
-            -- self.entity:changeState('pot-walk')
+                      
+            -- todo ensure the animation is completed, see sword swing etc
+            self.entity:changeState('pot-walk')
             end
         end
     end 
 
-    print("changing back to idle state")
-    self.player:changeState('idle')
-    -- todo 
-  -- if we've fully elapsed through one cycle of animation, change back to idle state
-  --[[
-  if self.player.currentAnimation.timesPlayed > 0 then
-    self.player.currentAnimation.timesPlayed = 0
-    self.player:changeState('idle')
+    
+    
+    if self.player.currentAnimation.timesPlayed > 0 then
+        
+        self.player.currentAnimation.timesPlayed = 0
+        -- if a pot was not in the hitbox then go back to idle
+        print("changing back to idle state")
+        self.player:changeState('idle')
+    
     end
-    ]]
+    
 
 end
 
 function PlayerPotLiftState:render()
  
-    -- todo
-
+ 
     local anim = self.player.currentAnimation
     love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
         math.floor(self.player.x - self.player.offsetX), math.floor(self.player.y - self.player.offsetY))

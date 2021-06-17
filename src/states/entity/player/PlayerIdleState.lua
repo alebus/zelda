@@ -36,7 +36,6 @@ function PlayerIdleState:update(dt)
         self.entity:changeState('swing-sword')
     end
 
-    -- todo next - OK place for this? is crashing...
     if love.keyboard.wasPressed('return') then
         print("return was pressed")            
         self.entity:changeState('pot-lift')
