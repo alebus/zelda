@@ -9,10 +9,21 @@
 PlayerIdleState = Class{__includes = EntityIdleState}
 
 function PlayerIdleState:enter(params)
+
     
-    -- render offset for spaced character sprite (negated in render function of state)
+    -- todo optional - it crashes with "self.entity = player" - why?
+    -- look at the diff in other files, I think it has something to do with the state including EntityXState?
+    -- self.entity = player
+
+    self.dungeon = dungeon
+
+
+    -- render offset for spaced character sprite; negated in render function of state
     self.entity.offsetY = 5
     self.entity.offsetX = 0
+
+   
+   
 end
 
 function PlayerIdleState:update(dt)
@@ -24,4 +35,12 @@ function PlayerIdleState:update(dt)
     if love.keyboard.wasPressed('space') then
         self.entity:changeState('swing-sword')
     end
+
+    -- todo next - OK place for this? is crashing...
+    if love.keyboard.wasPressed('return') then
+        print("return was pressed")            
+        self.entity:changeState('pot-lift')
+    end
+    
+
 end

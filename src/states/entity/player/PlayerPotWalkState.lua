@@ -1,4 +1,7 @@
-PlayerPotWalkState = Class{__includes = BaseState}
+
+
+-- todo check this
+PlayerPotWalkState = Class{__includes = EntityWalkState}
 
 
 

@@ -8,6 +8,13 @@
 
 GameObject = Class{}
 
+-- added to object for the pot collision detection (was only for entity in the distro)
+function GameObject:collides(target)
+    return not (self.x + self.width < target.x or self.x > target.x + target.width or
+                self.y + self.height < target.y or self.y > target.y + target.height)
+end
+
+
 function GameObject:init(def, x, y)
     
     -- string identifying this object type

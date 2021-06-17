@@ -45,6 +45,9 @@ function PlayerWalkState:update(dt)
         self.entity:changeState('swing-sword')
     end
 
+   
+
+
     -- perform base collision detection against walls
     EntityWalkState.update(self, dt)
 
@@ -57,7 +60,8 @@ function PlayerWalkState:update(dt)
     if self.entity.solidObject then
         --debug
         --print("solidObject code")
-        
+                
+
         if self.entity.direction == 'left' then
 
             -- temporarily adjust position away
