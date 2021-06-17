@@ -21,10 +21,10 @@ end
 
 function PlayerPotWalkState:update(dt)
  
-   -- todo NOTE this is mostly based on PlayerWalkState but with a lot of changes
-   -- todo need to add a bunch of different state changes etc etc
-   -- and test different directions etc
-
+   
+    -- todo need to add a bunch of different state changes etc etc
+    -- and test different directions etc etc
+    -- NOTE this is mostly based on PlayerWalkState but with a lot of changes
         
         if love.keyboard.isDown('left') then
             self.entity.direction = 'left'
@@ -39,9 +39,10 @@ function PlayerPotWalkState:update(dt)
             self.entity.direction = 'down'
             self.entity:changeAnimation('pot-walk-down')
         else
-            -- todo should there be a default here, changing to an idle state?
-            -- it should be a new pot-idle state OR for now try setting a property on the player, 
+    
+            -- for now I am setting property on the player
             -- so that when he does walk again, it goes to pot-walk state
+            -- todo optional - later can make a pot-idle state or something else to have that graphic when player is idle
             self.entity:changeState('idle')
         end
         

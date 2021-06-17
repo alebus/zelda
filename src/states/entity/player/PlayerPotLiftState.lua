@@ -1,11 +1,6 @@
 
--- todo next - check all of these class inheritance things if needed
-PlayerPotLiftState = Class{__includes = BaseState}
+PlayerPotLiftState = Class{__includes = BaseState}  
 
-
-
-    
-    
 -- check if a pot is in front of the player 
 -- lift it up only if in a special hitbox
 
@@ -80,6 +75,7 @@ function PlayerPotLiftState:update(dt)
                     self.player.currentAnimation.timesPlayed = 0
                     -- if a pot was not in the hitbox then go back to idle
                     self.player:changeState('pot-walk')
+                    object.state = 'carried'
                 
                 end
             

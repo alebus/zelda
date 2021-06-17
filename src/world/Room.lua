@@ -113,8 +113,7 @@ function Room:generateObjects()
                     VIRTUAL_HEIGHT - (VIRTUAL_HEIGHT - MAP_HEIGHT * TILE_SIZE) + MAP_RENDER_OFFSET_Y - TILE_SIZE - 16)
     )
 
-    -- todo next
-     
+    -- todo set pot to broken state etc
     pot.onCollide = function()
     
         
@@ -243,8 +242,13 @@ function Room:render()
         doorway:render(self.adjacentOffsetX, self.adjacentOffsetY)
     end
 
+    -- part 1 of object -- drawn before the player, otherwise he walks underneath switches
     for k, object in pairs(self.objects) do
-        object:render(self.adjacentOffsetX, self.adjacentOffsetY)
+        if object.state == 'carried' then
+            -- do nothing
+        else
+            object:render(self.adjacentOffsetX, self.adjacentOffsetY)
+        end
     end
 
     for k, entity in pairs(self.entities) do
@@ -276,6 +280,17 @@ function Room:render()
     if self.player then
         self.player:render()
     end
+
+
+    -- part 2 -- just for pots - so it renders on top of player
+    for k, object in pairs(self.objects) do
+        if object.state == 'carried' then
+            object.x = self.player.x 
+            object.y = self.player.y - 10
+            object:render(self.adjacentOffsetX, self.adjacentOffsetY)
+        end
+    end
+
 
     love.graphics.setStencilTest()
 
