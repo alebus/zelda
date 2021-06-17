@@ -74,8 +74,15 @@ function PlayerPotLiftState:update(dt)
             if object:collides(self.potHitbox) then
             print("object collide")
                       
-            -- todo ensure the animation is completed, see sword swing etc
-            self.entity:changeState('pot-walk')
+                -- todo ensure the animation is completed, see sword swing etc
+                if self.player.currentAnimation.timesPlayed > 0 then
+            
+                    self.player.currentAnimation.timesPlayed = 0
+                    -- if a pot was not in the hitbox then go back to idle
+                    self.player:changeState('pot-walk')
+                
+                end
+            
             end
         end
     end 

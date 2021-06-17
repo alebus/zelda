@@ -1,57 +1,140 @@
-
-
--- todo check this if needed
 PlayerPotWalkState = Class{__includes = EntityWalkState}
 
-
-
-function PlayerPotWalkState:init()
+function PlayerPotWalkState:init(player, dungeon)
 
     print("PlayerPotWalkState:init")
 
-    self.player = player
+    self.entity = player
     self.dungeon = dungeon
 
     -- render offset for spaced character sprite
-    self.player.offsetY = 5
-    self.player.offsetX = 0
+    self.entity.offsetY = 5
+    self.entity.offsetX = 0
 
-    
-    local direction = self.player.direction
-  
+    self.entity.bumped = false
 
-     -- todo
-     self.player:changeAnimation('pot-walk-' .. self.player.direction)
+    self.entity.potCarry = true
 
 end
 
 
-function PlayerPotWalkState:enter()
-
-end
 
 function PlayerPotWalkState:update(dt)
+ 
+   -- todo NOTE this is mostly based on PlayerWalkState but with a lot of changes
+   -- todo need to add a bunch of different state changes etc etc
+   -- and test different directions etc
+
+        
+        if love.keyboard.isDown('left') then
+            self.entity.direction = 'left'
+            self.entity:changeAnimation('pot-walk-left')
+        elseif love.keyboard.isDown('right') then
+            self.entity.direction = 'right'
+            self.entity:changeAnimation('pot-walk-right')
+        elseif love.keyboard.isDown('up') then
+            self.entity.direction = 'up'
+            self.entity:changeAnimation('pot-walk-up')
+        elseif love.keyboard.isDown('down') then
+            self.entity.direction = 'down'
+            self.entity:changeAnimation('pot-walk-down')
+        else
+            -- todo should there be a default here, changing to an idle state?
+            -- it should be a new pot-idle state OR for now try setting a property on the player, 
+            -- so that when he does walk again, it goes to pot-walk state
+            self.entity:changeState('idle')
+        end
+        
+    
+
+    -- wall collision
+    EntityWalkState.update(self, dt)
 
 
+    -- this is all code from PlayerWalkState
 
+    self.entity.bumped = false
 
-      -- todo ?
-  -- if we've fully elapsed through one cycle of animation, change back to idle state
-  --[[
-  if self.player.currentAnimation.timesPlayed > 0 then
-    self.player.currentAnimation.timesPlayed = 0
-    self.player:changeState('idle')
+     -- if we bumped something when checking collision, check any object collisions
+     if self.bumped then
+        -- debug
+        --print("self is bumped")
+        if self.entity.direction == 'left' then
+
+            -- temporarily adjust position into the wall, since bumping pushes outward
+            self.entity.x = self.entity.x - PLAYER_WALK_SPEED * dt
+            -- check for colliding into doorway to transition
+            for k, doorway in pairs(self.dungeon.currentRoom.doorways) do
+                if self.entity:collides(doorway) and doorway.open then
+
+                    -- shift entity to center of door to avoid phasing through wall
+                    self.entity.y = doorway.y + 4
+                    Event.dispatch('shift-left')
+                end
+            end
+
+            -- readjust
+            self.entity.x = self.entity.x + PLAYER_WALK_SPEED * dt
+        elseif self.entity.direction == 'right' then
+            
+            -- temporarily adjust position
+            self.entity.x = self.entity.x + PLAYER_WALK_SPEED * dt
+            
+            -- check for colliding into doorway to transition
+            for k, doorway in pairs(self.dungeon.currentRoom.doorways) do
+                if self.entity:collides(doorway) and doorway.open then
+
+                    -- shift entity to center of door to avoid phasing through wall
+                    self.entity.y = doorway.y + 4
+                    Event.dispatch('shift-right')
+                end
+            end
+
+            -- readjust
+            self.entity.x = self.entity.x - PLAYER_WALK_SPEED * dt
+        elseif self.entity.direction == 'up' then
+            
+            -- temporarily adjust position
+            self.entity.y = self.entity.y - PLAYER_WALK_SPEED * dt
+            
+            -- check for colliding into doorway to transition
+            for k, doorway in pairs(self.dungeon.currentRoom.doorways) do
+                if self.entity:collides(doorway) and doorway.open then
+
+                    -- shift entity to center of door to avoid phasing through wall
+                    self.entity.x = doorway.x + 8
+                    Event.dispatch('shift-up')
+                end
+            end
+
+            -- readjust
+            self.entity.y = self.entity.y + PLAYER_WALK_SPEED * dt
+        else
+            
+            -- temporarily adjust position
+            self.entity.y = self.entity.y + PLAYER_WALK_SPEED * dt
+            
+            -- check for colliding into doorway to transition
+            for k, doorway in pairs(self.dungeon.currentRoom.doorways) do
+                if self.entity:collides(doorway) and doorway.open then
+
+                    -- shift entity to center of door to avoid phasing through wall
+                    self.entity.x = doorway.x + 8
+                    Event.dispatch('shift-down')
+                end
+            end
+
+            -- readjust
+            self.entity.y = self.entity.y - PLAYER_WALK_SPEED * dt
+        end
     end
-    ]]
 end
+
 
 function PlayerPotWalkState:render()
-
-
-    local anim = self.player.currentAnimation
+    local anim = self.entity.currentAnimation
     love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
-        math.floor(self.player.x - self.player.offsetX), math.floor(self.player.y - self.player.offsetY))
-
-
+        math.floor(self.entity.x - self.entity.offsetX), math.floor(self.entity.y - self.entity.offsetY))
+    
+    
 end
-

@@ -29,10 +29,18 @@ end
 function PlayerIdleState:update(dt)
     if love.keyboard.isDown('left') or love.keyboard.isDown('right') or
        love.keyboard.isDown('up') or love.keyboard.isDown('down') then
-        self.entity:changeState('walk')
+        
+        -- can't swing sword if carrying pot
+        if self.entity.potCarry then 
+            self.entity:changeState('pot-walk')
+        else
+            self.entity:changeState('walk')
+        end
+        
+        
     end
 
-    if love.keyboard.wasPressed('space') then
+    if love.keyboard.wasPressed('space') and self.entity.potCarry == false then
         self.entity:changeState('swing-sword')
     end
 
