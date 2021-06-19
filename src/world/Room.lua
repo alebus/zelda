@@ -115,17 +115,31 @@ function Room:generateObjects()
 
     
     pot.onCollide = function()
-    
+        -- todo currently it's not colliding with entities or walls etc
         -- todo set pot to broken state etc
-
+        if pot.state == 'flying' then
+            pot.state = 'broken'
+            -- todo make it so you can't pick it up again when broken
+        end
     end
 
     pot.flying = function()
     
-        -- todo next 1
         pot.state = 'flying'
-        pot.dx = 100
-    
+        
+        if self.player.direction == 'up' then
+            pot.dy = -100
+        elseif self.player.direction == 'down' then
+            -- move it down, otherwise it collides with player!
+            pot.y = pot.y + 32
+            pot.dy = 100
+        elseif self.player.direction == 'left' then
+            pot.dx = -100
+        else 
+            pot.dx = 100
+        end
+
+
     end
 
 
