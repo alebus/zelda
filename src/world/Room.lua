@@ -119,6 +119,7 @@ function Room:generateObjects()
         -- todo set pot to broken state etc
         if pot.state == 'flying' then
             pot.state = 'broken'
+            gSounds['door']:play()
             -- todo make it so you can't pick it up again when broken
         end
     end
@@ -139,13 +140,13 @@ function Room:generateObjects()
             pot.dx = 100
         end
 
-
     end
 
 
     -- add to list of objects in scene 
     table.insert(self.objects, switch)
     table.insert(self.objects, pot)
+    print_r(self.objects)
 
 end
 
@@ -227,7 +228,7 @@ function Room:update(dt)
             
             --print("Room: collision with object")
                      
-           -- todo next - could use onCollide instead of solidObject thing
+           -- todo optional could use onCollide instead of solidObject thing
             object:onCollide()
 
            
@@ -241,10 +242,27 @@ function Room:update(dt)
 
             if object.consumable then
                 table.remove(self.objects, k)
-            end
-            
-           
+            end       
         end
+    
+        -- todo next 1 - after looking, I think this is the best place to put all the checks for the pot flying 
+        if object.state == 'flying' then
+        
+            for i = #self.entities, 1, -1 do
+                local entity = self.entities[i]
+        
+                -- collision between object and entities in the room
+                if not entity.dead and object:collides(entity) then
+                    gSounds['hit-player']:play()
+                    entity:damage(1)  
+                    gSounds['hit-enemy']:play()
+                    object.state = 'broken'          
+                end
+            end
+        
+        end
+    
+    
     end
 end
 

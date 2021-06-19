@@ -66,9 +66,15 @@ function GameObject:update(dt)
         --self.x = math.floor(self.x)
         --self.y = math.floor(self.y)
         
-        print(self.x, "--> self.x")
-
+        --print(self.x, "--> self.x")   
     end
+
+
+
+
+
+
+
 
 end
 -- todo look at math.floor in here
