@@ -60,7 +60,7 @@ GAME_OBJECT_DEFS = {
                 frame = 33
             },
             ['broken'] = {
-                frame = 33
+                frame = 52
             },
             ['flying'] = {
                 frame = 33

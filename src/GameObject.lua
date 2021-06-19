@@ -39,6 +39,12 @@ function GameObject:init(def, x, y)
     self.width = def.width
     self.height = def.height
 
+    -- todo
+    
+    
+    self.dx = 0
+    self.dy = 0
+
     -- todo alter this if needed 
     -- default empty collision callback
     self.onCollide = def.onCollide or function() end
@@ -46,9 +52,27 @@ end
 
 function GameObject:update(dt)
 
-end
 
+    -- todo next 1 update the dx / dy 
+    -- check examples from earlier projects
+    -- there is a lot of other code in diff places that needs to be updated too
+    -- note I am not using projectile.lua at all 
+
+    if self.state == 'flying' then
+        self.x = self.x + self.dx * dt
+        self.y = self.y + self.dy * dt
+        
+        -- I think you can't do this here, because you need the values to increment properly
+        --self.x = math.floor(self.x)
+        --self.y = math.floor(self.y)
+        
+        print(self.x, "--> self.x")
+
+    end
+
+end
+-- todo look at math.floor in here
 function GameObject:render(adjacentOffsetX, adjacentOffsetY)
     love.graphics.draw(gTextures[self.texture], gFrames[self.texture][self.states[self.state].frame or self.frame],
-        self.x + adjacentOffsetX, self.y + adjacentOffsetY)
+        math.floor(self.x + adjacentOffsetX), math.floor(self.y + adjacentOffsetY))
 end

@@ -113,10 +113,18 @@ function Room:generateObjects()
                     VIRTUAL_HEIGHT - (VIRTUAL_HEIGHT - MAP_HEIGHT * TILE_SIZE) + MAP_RENDER_OFFSET_Y - TILE_SIZE - 16)
     )
 
-    -- todo set pot to broken state etc
+    
     pot.onCollide = function()
     
-        
+        -- todo set pot to broken state etc
+
+    end
+
+    pot.flying = function()
+    
+        -- todo next 1
+        pot.state = 'flying'
+        pot.dx = 100
     
     end
 
@@ -203,7 +211,7 @@ function Room:update(dt)
         -- trigger collision callback on object
         if self.player:collides(object) then
             
-            print("Room: collision with object")
+            --print("Room: collision with object")
                      
            -- todo next - could use onCollide instead of solidObject thing
             object:onCollide()
@@ -287,6 +295,9 @@ function Room:render()
         if object.state == 'carried' then
             object.x = self.player.x 
             object.y = self.player.y - 10
+            object:render(self.adjacentOffsetX, self.adjacentOffsetY)
+        elseif object.state == 'flying' then
+            -- todo 
             object:render(self.adjacentOffsetX, self.adjacentOffsetY)
         end
     end

@@ -62,12 +62,12 @@ function PlayerPotLiftState:update(dt)
 
     for k, object in pairs(self.dungeon.currentRoom.objects) do
 
-        print(object.type)
+        --print(object.type)
 
         if object.solid then
             
             if object:collides(self.potHitbox) then
-            print("object collide")
+            --print("object collide")
                       
                 -- todo ensure the animation is completed, see sword swing etc
                 if self.player.currentAnimation.timesPlayed > 0 then
