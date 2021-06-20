@@ -45,7 +45,7 @@ function PlayerPotLiftState:init(player, dungeon)
      -- will only be active during this state
     self.potHitbox = Hitbox(hitboxX, hitboxY, hitboxWidth, hitboxHeight)
 
-    -- todo
+    
     self.player:changeAnimation('pot-lift-' .. self.player.direction)
 
 end
@@ -69,7 +69,7 @@ function PlayerPotLiftState:update(dt)
             if object:collides(self.potHitbox) then
             --print("object collide")
                       
-                -- todo ensure the animation is completed, see sword swing etc
+                -- ensure anim is completed
                 if self.player.currentAnimation.timesPlayed > 0 then
             
                     self.player.currentAnimation.timesPlayed = 0

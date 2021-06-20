@@ -10,7 +10,7 @@ PlayerIdleState = Class{__includes = BaseState}
 
 
 
--- todo next NOTE -- I changed the include above and will put stuff from EntityIdle as needed 
+-- NOTE -- I changed the include above and will put stuff from EntityIdle as needed 
 -- because it's confusing me and crashing etc, to not have explicity stuff in here etc
 
 function PlayerIdleState:init(player, dungeon)
@@ -66,7 +66,8 @@ function PlayerIdleState:update(dt)
         --print("return was pressed") 
         if self.entity.potCarry then 
             print("self.entity.potCarry")
-            -- todo next - throw pot! needs to fly off etc etc
+            
+            -- throw pot! needs to fly off etc etc
             for k, object in pairs(self.dungeon.currentRoom.objects) do
                 print(object.type)
                 if object.type == 'pot' then

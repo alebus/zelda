@@ -105,6 +105,12 @@ function Room:generateObjects()
         end
     end
 
+
+    -- add to list of objects in scene 
+    table.insert(self.objects, switch)
+
+
+   
     local pot = GameObject(
         GAME_OBJECT_DEFS['pot'],
         math.random(MAP_RENDER_OFFSET_X + TILE_SIZE,
@@ -115,8 +121,6 @@ function Room:generateObjects()
 
     
     pot.onCollide = function()
-        -- todo currently it's not colliding with entities or walls etc
-        -- todo set pot to broken state etc
         if pot.state == 'flying' then
             pot.state = 'broken'
             gSounds['door']:play()
@@ -126,7 +130,7 @@ function Room:generateObjects()
     pot.flying = function()
     
         pot.state = 'flying'
-         
+        
         if self.player.direction == 'up' then
             pot.dy = -100
         elseif self.player.direction == 'down' then
@@ -140,12 +144,13 @@ function Room:generateObjects()
         end
 
     end
-
-
     -- add to list of objects in scene 
-    table.insert(self.objects, switch)
     table.insert(self.objects, pot)
-    print_r(self.objects)
+    
+
+
+  
+    --print_r(self.objects)
 
 end
 
@@ -244,7 +249,7 @@ function Room:update(dt)
             end       
         end
     
-        -- todo next 1 - after looking, I think this is the best place to put all the checks for the pot flying 
+        -- I think this is the best place to put all the checks for the pot flying 
         if object.state == 'flying' then
         
             for i = #self.entities, 1, -1 do
@@ -328,7 +333,6 @@ function Room:render()
             object.y = self.player.y - 10
             object:render(self.adjacentOffsetX, self.adjacentOffsetY)
         elseif object.state == 'flying' then
-            -- todo 
             object:render(self.adjacentOffsetX, self.adjacentOffsetY)
         end
     end

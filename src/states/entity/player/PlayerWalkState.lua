@@ -52,10 +52,9 @@ function PlayerWalkState:update(dt)
     EntityWalkState.update(self, dt)
 
 
-    -- todo - Refactor/modify the code if desired, because I was hoping to use all the self.bumped code below but it doesn't look like a good way to do it
+    -- todo optional - modify the code if desired, because I was hoping to use all the self.bumped code below but it doesn't look like a good way to do it
     -- so instead I am making a new section in here just for colliding with solid objects (pots) 
     -- some stuff I did before this decision will therefore not make sense anymore 
-    -- also I am not using the onCollide of the object which would be better eh?
 
     if self.entity.solidObject then
         --debug

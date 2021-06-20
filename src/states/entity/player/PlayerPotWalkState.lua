@@ -22,8 +22,6 @@ end
 function PlayerPotWalkState:update(dt)
  
    
-    -- todo need to add a bunch of different state changes etc etc
-    -- and test different directions etc etc
     -- NOTE this is mostly based on PlayerWalkState but with a lot of changes
         
         if love.keyboard.isDown('left') then
