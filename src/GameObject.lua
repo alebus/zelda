@@ -39,9 +39,8 @@ function GameObject:init(def, x, y)
     self.width = def.width
     self.height = def.height
 
-    -- todo
-    
-    
+    self.distanceTraveled = 0
+
     self.dx = 0
     self.dy = 0
 
@@ -62,10 +61,21 @@ function GameObject:update(dt)
         self.x = self.x + self.dx * dt
         self.y = self.y + self.dy * dt
         
-        -- I think you can't do this here, because you need the values to increment properly
+
+        -- note you can't do this here, because you need the values to increment properly
         --self.x = math.floor(self.x)
         --self.y = math.floor(self.y)
         
+
+        -- smash the pot after it has traveled 4 tiles
+        self.distanceTraveled = self.distanceTraveled + math.max(math.abs(self.dx * dt), math.abs(self.dy * dt))
+        print("self.distanceTraveled: ", self.distanceTraveled)
+
+        if self.distanceTraveled >= TILE_SIZE * 4 then
+            self.state = 'broken'
+            gSounds['door']:play()
+        end
+                
         --print(self.x, "--> self.x")   
     end
 

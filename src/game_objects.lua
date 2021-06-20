@@ -50,6 +50,7 @@ GAME_OBJECT_DEFS = {
         width = 16,
         height = 16,
         solid = true,
+        distanceTraveled = 0,
         consumable = false,
         defaultState = 'default',  
         states = { 

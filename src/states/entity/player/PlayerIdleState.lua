@@ -61,9 +61,9 @@ function PlayerIdleState:update(dt)
         self.entity:changeState('swing-sword')
     end
 
-    -- todo next need to add states to thow pot etc using player.potCarry attribute
+    
     if love.keyboard.wasPressed('return') then
-        print("return was pressed") 
+        --print("return was pressed") 
         if self.entity.potCarry then 
             print("self.entity.potCarry")
             -- todo next - throw pot! needs to fly off etc etc
@@ -75,15 +75,26 @@ function PlayerIdleState:update(dt)
                 end   
             end
 
-            -- todo then go back to idle eh?
             self.entity.potCarry = false
             self.entity:changeState('idle')
             
 
         else      
-            -- todo very optional -- he shouldn't do the anim if there is not a pot to pick up, 
-            -- so when you hit enter he is not going through the motions with nothing there
-            self.entity:changeState('pot-lift')
+
+            for k, object in pairs(self.dungeon.currentRoom.objects) do
+                print(object.type)
+                if object.type == 'pot' then
+
+                    if object.state ~= 'broken' then
+                         -- todo optional -- he shouldn't do the anim if there is not a pot to pick up, 
+                        -- so when you hit enter he is not going through the motions with nothing there
+                        self.entity:changeState('pot-lift')
+                    end
+                    
+                end   
+            end
+
+           
         end
     end
     

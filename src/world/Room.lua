@@ -120,14 +120,13 @@ function Room:generateObjects()
         if pot.state == 'flying' then
             pot.state = 'broken'
             gSounds['door']:play()
-            -- todo make it so you can't pick it up again when broken
         end
     end
 
     pot.flying = function()
     
         pot.state = 'flying'
-        
+         
         if self.player.direction == 'up' then
             pot.dy = -100
         elseif self.player.direction == 'down' then
