@@ -71,6 +71,25 @@ function GameObject:update(dt)
             gSounds['door']:play()
         end
                 
+
+         -- check to see if we collide with a wall
+        local bottomEdge = VIRTUAL_HEIGHT - (VIRTUAL_HEIGHT - MAP_HEIGHT * TILE_SIZE) 
+         + MAP_RENDER_OFFSET_Y - TILE_SIZE
+
+        if self.x <= MAP_RENDER_OFFSET_X + TILE_SIZE then 
+            self.state = 'broken'
+            gSounds['door']:play()
+        elseif self.x + 16 >= VIRTUAL_WIDTH - TILE_SIZE * 2 then
+            self.state = 'broken'
+            gSounds['door']:play()
+        elseif self.y <= MAP_RENDER_OFFSET_Y + TILE_SIZE - 16 / 2 then 
+            self.state = 'broken'
+            gSounds['door']:play()
+        elseif self.y + 16 >= bottomEdge then
+            self.state = 'broken'
+            gSounds['door']:play()
+        end
+        
         --print(self.x, "--> self.x")   
     end
 
