@@ -120,10 +120,17 @@ function Room:generateObjects()
     )
 
     
+    pot.shatter = function()
+    
+        --pot.changeAnimation('pot-broken')
+        pot.state = 'broken'
+        gSounds['door']:play()
+
+    end
+
     pot.onCollide = function()
-        if pot.state == 'flying' then
-            pot.state = 'broken'
-            gSounds['door']:play()
+        if pot.state == 'flying' then 
+            pot:shatter()
         end
     end
 
@@ -257,10 +264,9 @@ function Room:update(dt)
         
                 -- collision between object and entities in the room
                 if not entity.dead and object:collides(entity) then
-                    gSounds['hit-player']:play()
                     entity:damage(1)  
                     gSounds['hit-enemy']:play()
-                    object.state = 'broken'          
+                    object:shatter()        
                 end
             end
         

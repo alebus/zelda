@@ -44,6 +44,8 @@ function GameObject:init(def, x, y)
     self.dx = 0
     self.dy = 0
 
+    -- used for very simple pot animation
+    self.timer = 0
     
     -- default empty collision callback
     self.onCollide = def.onCollide or function() end
@@ -51,6 +53,11 @@ end
 
 function GameObject:update(dt)
 
+    -- timer used below for simple animation
+    if self.state == 'broken' then
+        self.timer = self.timer + dt
+        print(self.timer)
+    end
 
     if self.state == 'flying' then
         self.x = self.x + self.dx * dt
@@ -67,8 +74,7 @@ function GameObject:update(dt)
         print("self.distanceTraveled: ", self.distanceTraveled)
 
         if self.distanceTraveled >= TILE_SIZE * 4 then
-            self.state = 'broken'
-            gSounds['door']:play()
+            self:shatter()
         end
                 
 
@@ -77,32 +83,39 @@ function GameObject:update(dt)
          + MAP_RENDER_OFFSET_Y - TILE_SIZE
 
         if self.x <= MAP_RENDER_OFFSET_X + TILE_SIZE then 
-            self.state = 'broken'
-            gSounds['door']:play()
+            self:shatter()
         elseif self.x + 16 >= VIRTUAL_WIDTH - TILE_SIZE * 2 then
-            self.state = 'broken'
-            gSounds['door']:play()
+            self:shatter()
         elseif self.y <= MAP_RENDER_OFFSET_Y + TILE_SIZE - 16 / 2 then 
-            self.state = 'broken'
-            gSounds['door']:play()
+            self:shatter()
         elseif self.y + 16 >= bottomEdge then
-            self.state = 'broken'
-            gSounds['door']:play()
+            self:shatter()
         end
         
         --print(self.x, "--> self.x")   
     end
-
-
-
-
-
-
-
-
 end
+
+
 -- NOTE check out math.floor in here
 function GameObject:render(adjacentOffsetX, adjacentOffsetY)
-    love.graphics.draw(gTextures[self.texture], gFrames[self.texture][self.states[self.state].frame or self.frame],
-        math.floor(self.x + adjacentOffsetX), math.floor(self.y + adjacentOffsetY))
+   
+    if self.state == 'broken' then 
+        if self.timer > 0.3 then
+            -- after a short delay, stop rendering
+            print("time is up")
+            return
+        else
+            -- this will render a broken pot briefly
+            love.graphics.draw(gTextures[self.texture], gFrames[self.texture][self.states[self.state].frame or self.frame],
+            math.floor(self.x + adjacentOffsetX), math.floor(self.y + adjacentOffsetY))
+        end
+    end
+
+    -- path for non-broken stuffs
+    if self.state ~= 'broken' then
+        love.graphics.draw(gTextures[self.texture], gFrames[self.texture][self.states[self.state].frame or self.frame],
+            math.floor(self.x + adjacentOffsetX), math.floor(self.y + adjacentOffsetY))
+    end
+
 end
